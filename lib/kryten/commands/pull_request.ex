@@ -16,6 +16,6 @@ defmodule Kryten.Command.PullRequest do
     send_message("<@#{message.user}> Open Pull Requests\n\n#{prs}", message.channel, slack)
   end
 
-  defp matches(text, id), do: Regex.named_captures ~r/<@#{id}>:?\spull requests/, text
+  defp matches(text, id), do: Regex.named_captures ~r/<@#{id}>:?\s+(pull requests|PRs)/, text
 
 end

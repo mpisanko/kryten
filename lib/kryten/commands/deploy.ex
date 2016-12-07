@@ -4,6 +4,7 @@ defmodule Kryten.Command.Deploy do
 
   def can_handle?(_message = %{text: message_text}, slack) do
     matches(message_text, slack.me.id)
+    |> legit_project?
     |> case do
          nil -> false
          _ -> true
@@ -17,6 +18,8 @@ defmodule Kryten.Command.Deploy do
     Jenkins.deploy project
   end
 
-  defp matches(text, id), do: Regex.named_captures ~r/<@#{id}>:?\sdeploy\s(?<project>\w+)/, text
+  defp matches(text, id), do: Regex.named_captures ~r/<@#{id}>:?\sdeploy\s+(?<project>\w+)/, text
+  defp legit_project?(nil), do: nil
+  defp legit_project?(p_regex), do: if Regex.match?(~r/\w+_staging(_deploy)?/, Map.get(p_regex, "project")), do: p_regex, else: nil
 
 end
