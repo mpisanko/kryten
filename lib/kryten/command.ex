@@ -1,8 +1,10 @@
 defmodule Kryten.Command do
-  alias Kryten.Commands
 
   def all do
     [
+      Kryten.Command.Deploy,
+      Kryten.Command.PullRequest,
+      Kryten.Command.Unknown
     ]
   end
 

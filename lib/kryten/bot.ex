@@ -1,6 +1,6 @@
 defmodule Kryten.Bot do
   use Slack
-  alias Kryten.{Jenkins, Github}
+  alias Kryten.{Command}
 
   def start_link(token) do
     Slack.Bot.start_link(__MODULE__, [], token)
@@ -11,23 +11,15 @@ defmodule Kryten.Bot do
   end
 
   def handle_event(message = %{type: "message", text: message_text}, slack, state) do
-    matches = Regex.named_captures ~r/<@#{slack.me.id}>:?\sdeploy\s(?<project>\w+)/, message_text
-
-    if matches do
-      project = Map.get(matches, "project")
-      send_message("<@#{message.user}> deploying #{project}", message.channel, slack)
-      Jenkins.deploy project
-    end
-
-    pr_matches = Regex.named_captures ~r/<@#{slack.me.id}>:?\spull requests/, message_text
-
-    if pr_matches do
-      prs = Github.open_pull_requests
-      send_message("<@#{message.user}> Open Pull Requests\n\n#{prs}", message.channel, slack)
-    end
-
+    _handle_message(message, slack, Command.all)
     {:ok, state}
   end
   def handle_event(_, _, state), do: {:ok, state}
+
+  defp _handle_message(_, _, []), do: nil
+  defp _handle_message(message, slack, [command|commands]), do: _try_handle_message(command.can_handle?(message, slack), message, slack, command, commands)
+
+  defp _try_handle_message(true, message, slack, command, _), do: command.handle(message, slack)
+  defp _try_handle_message(false, message, slack, _, commands), do: _handle_message(message, slack, commands)
 
 end
