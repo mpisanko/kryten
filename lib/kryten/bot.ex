@@ -1,6 +1,6 @@
 defmodule Kryten.Bot do
   use Slack
-  alias Kryten.Jenkins
+  alias Kryten.{Jenkins, Github}
 
   def start_link(token) do
     Slack.Bot.start_link(__MODULE__, [], token)
@@ -17,6 +17,13 @@ defmodule Kryten.Bot do
       project = Map.get(matches, "project")
       send_message("<@#{message.user}> deploying #{project}", message.channel, slack)
       Jenkins.deploy project
+    end
+
+    pr_matches = Regex.named_captures ~r/<@#{slack.me.id}>:?\spull requests/, message_text
+
+    if pr_matches do
+      prs = Github.open_pull_requests
+      send_message("<@#{message.user}> Open Pull Requests\n\n#{prs}", message.channel, slack)
     end
 
     {:ok, state}

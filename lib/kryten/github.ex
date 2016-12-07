@@ -15,23 +15,16 @@ defmodule Kryten.Github do
       |> get!(%{}, auth)
       |> Map.get(:body)
       |> Poison.decode!
-      |> Enum.map(fn pr -> {Map.get(pr, "title"), Map.get(pr, "url")} end)
-      |> Enum.flat_map(&Kryten.Github.pulls_mapper/1)
     end)
-    # get!("repos")
-    # map
-    #   get!("pulls #{repo}")
-    # map those to links
+    |> List.flatten
+    |> Enum.group_by(fn p -> Map.get(p, "base") |> Map.get("repo") |> Map.get("name") end)
+    |> Enum.reduce(%{}, fn {project, prs}, acc -> Map.put(acc, project, Enum.map(prs, fn pr -> "#{Map.get(pr, "title")}: #{Map.get(pr, "url")}" end)) end)
+    |> Enum.map(fn {project, prs} -> "\n*#{project}*\n#{Enum.map(prs, fn pr -> "• #{pr}\n" end)}" end)  |> Enum.join("")
   end
 
   def get_prs(name), do: "pulls #{name}"
 
   ## CALLBACKS
-
-  def pulls_mapper(pr), do: Enum.map(pr, &Kryten.Github.pr_to_s/1)
-  def pr_to_s([]), do: nil
-  def pr_to_s({title, url}), do: "#{title}: #{url}"
-
 
   def process_url("repos"), do: "https://api.github.com/orgs/#{@org}/repos?type=private"
   def process_url("pulls " <> repo), do: "https://api.github.com/repos/#{@org}/#{repo}/pulls?state=open"
