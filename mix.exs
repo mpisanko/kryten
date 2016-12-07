@@ -18,7 +18,8 @@ defmodule Kryten.Mixfile do
   defp deps do
     [
       {:slack, "~> 0.9.0"},
-      {:httpoison, "~> 0.10.0", override: true}
+      {:httpoison, "~> 0.10.0", override: true},
+      {:poison, "~> 3.0"}
     ]
   end
 end
