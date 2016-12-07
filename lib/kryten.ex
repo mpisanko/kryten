@@ -8,5 +8,5 @@ defmodule Kryten do
 
   defp children, do: [worker(Kryten.Bot, [slack_token])]
 
-  defp slack_token, do: Application.get_env(:kryten, :token)
+  defp slack_token, do: Application.get_env(:kryten, :slack_token)
 end

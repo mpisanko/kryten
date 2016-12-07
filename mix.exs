@@ -11,13 +11,14 @@ defmodule Kryten.Mixfile do
   end
 
   def application do
-    [applications: [:logger, :slack],
+    [applications: [:logger, :slack, :httpoison],
      mod: {Kryten, []}]
   end
 
   defp deps do
     [
-      {:slack, "~> 0.9.0"}
+      {:slack, "~> 0.9.0"},
+      {:httpoison, "~> 0.10.0", override: true}
     ]
   end
 end
