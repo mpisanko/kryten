@@ -18,7 +18,7 @@ defmodule Kryten.Github do
     end)
     |> List.flatten
     |> Enum.group_by(fn p -> Map.get(p, "base") |> Map.get("repo") |> Map.get("name") end)
-    |> Enum.reduce(%{}, fn {project, prs}, acc -> Map.put(acc, project, Enum.map(prs, fn pr -> "#{Map.get(pr, "title")}: #{Map.get(pr, "url")}" end)) end)
+    |> Enum.reduce(%{}, fn {project, prs}, acc -> Map.put(acc, project, Enum.map(prs, fn pr -> "#{Map.get(pr, "title")}: #{Map.get(pr, "html_url")}" end)) end)
     |> Enum.map(fn {project, prs} -> "\n*#{project}*\n#{Enum.map(prs, fn pr -> "• #{pr}\n" end)}" end)  |> Enum.join("")
   end
 
