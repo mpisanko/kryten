@@ -18,7 +18,7 @@ defmodule Kryten.Command.Deploy do
     Jenkins.deploy project
   end
 
-  defp matches(text, id), do: Regex.named_captures ~r/<@#{id}>:?\sdeploy\s+(?<project>\w+)/, text
+  defp matches(text, id), do: Regex.named_captures ~r/<@#{id}>:?\sdeploy\s+(?<project>\w+)/i, text
   defp legit_project?(nil), do: nil
   defp legit_project?(p_regex), do: if Regex.match?(~r/\w+_staging(_deploy)?/, Map.get(p_regex, "project")), do: p_regex, else: nil
 
