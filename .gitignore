@@ -17,3 +17,8 @@ erl_crash.dump
 *.ez
 .env
 *.beam
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
