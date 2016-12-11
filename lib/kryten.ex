@@ -4,7 +4,7 @@ defmodule Kryten do
 
   def start(_type, _args), do: Supervisor.start_link(children, options)
 
-  defp options, do: [strategy: :one_for_one, name: Kryten.Supervisor]
+  def options, do: [strategy: :one_for_one, name: Kryten.Supervisor]
 
   defp children, do: [worker(Kryten.Bot, [slack_token])]
 

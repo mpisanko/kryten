@@ -19,7 +19,8 @@ defmodule Kryten.Mixfile do
     [
       {:slack, "~> 0.9.0"},
       {:httpoison, "~> 0.10.0", override: true},
-      {:poison, "~> 3.0"}
+      {:poison, "~> 3.0"},
+      {:junit_formatter, ">= 0.0.0"}
     ]
   end
 end

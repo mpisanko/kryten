@@ -1,8 +1,9 @@
 defmodule KrytenTest do
-  use ExUnit.Case
-  doctest Kryten
+  use ExUnit.Case, async: true
 
-  test "the truth" do
-    assert 1 + 1 == 2
+  test "restart strategy is one_for_one" do
+    strategy = Kryten.options |> Keyword.get(:strategy)
+    assert strategy == :one_for_one
   end
+
 end

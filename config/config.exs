@@ -6,4 +6,8 @@ config :kryten,
   github_user: System.get_env("GITHUB_USER"),
   github_token: System.get_env("GITHUB_TOKEN")
 
+config :junit_formatter,
+  report_file: "results.xml",
+  print_report_file: true
+
 #     import_config "#{Mix.env}.exs"
