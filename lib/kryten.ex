@@ -6,7 +6,12 @@ defmodule Kryten do
 
   def options, do: [strategy: :one_for_one, name: Kryten.Supervisor]
 
-  defp children, do: [worker(Kryten.Bot, [slack_token])]
+  defp children do
+    [
+      worker(Kryten.Bot, [slack_token]),
+      worker(Kryten.Authorisation.Service, [slack_token])
+    ]
+  end
 
   defp slack_token, do: Application.get_env(:kryten, :slack_token)
 end
