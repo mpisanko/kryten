@@ -5,6 +5,7 @@ config :kryten,
   jenkins_token: System.get_env("JENKINS_TOKEN"),
   github_user: System.get_env("GITHUB_USER"),
   github_token: System.get_env("GITHUB_TOKEN"),
+  circle_token: System.get_env("CCI_TOKEN"),
   authorised_domain: "jobseeker.com.au",
   authorised_users: [
     "michal.pisanko",

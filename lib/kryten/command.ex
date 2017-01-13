@@ -4,6 +4,7 @@ defmodule Kryten.Command do
     [
       Kryten.Command.Deploy,
       Kryten.Command.PullRequest,
+      Kryten.Command.FailingBuilds,
       Kryten.Command.Unknown
     ]
   end

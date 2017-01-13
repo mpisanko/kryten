@@ -16,9 +16,7 @@ defmodule Kryten.Bot do
   def handle_event(message = %{type: "message", user: @kryten}, _slack, state), do: {:ok, state}
   def handle_event(message = %{type: "message", text: message_text}, slack, state) do
     message
-    |> IO.inspect
     |> ensure_authorised(slack)
-    |> IO.inspect
     |> _handle_message(slack, Command.all)
 
     {:ok, state}
