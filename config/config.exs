@@ -9,7 +9,21 @@ config :kryten,
   authorised_domain: "jobseeker.com.au",
   authorised_users: [
     "michal.pisanko",
-    "ben.hallett"
+    "ben.hallett",
+    "cuong.hoang",
+    "douglas.roeder",
+    "felipe.nakandakari",
+    "jason.mcglade",
+    "kirill.lastovirya",
+    "andrei.miulescu",
+    "sanghyun.park",
+    "son.phung",
+    "ren.shao",
+    "max.flander",
+    "mark.pritchard",
+    "tim.wen",
+    "wayne.see",
+    "pierre.caserta"
   ],
   kryten_user_id: "U3BCSMC9Z"
 
